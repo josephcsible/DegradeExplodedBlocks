@@ -1,6 +1,6 @@
 /*
 DegradeExplodedBlocks Minecraft Mod
-Copyright (C) 2017	 Joseph C. Sible
+Copyright (C) 2017 Joseph C. Sible
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -101,9 +101,9 @@ public class DegradeExplodedBlocks {
 		config.setCategoryComment(Configuration.CATEGORY_GENERAL, "Blocks, predicates, and states are specified exactly as they are with the /testforblock and /setblock commands.\nIf multiple replacements with different predicates are specified for the same block, the earliest matching one wins.");
 		// Not using getStringList to avoid overly-long list of default values in the comment
 		// XXX it still appears in the GUI; that needs to be fixed too
-        Property prop = config.get(Configuration.CATEGORY_GENERAL, "replacements", DEFAULT_REPLACEMENTS);
-        prop.setLanguageKey("replacements");
-        prop.setComment("A list of entries in the following format: <block> <dataValue|-1|state|*> <block> [dataValue|state]");
+		Property prop = config.get(Configuration.CATEGORY_GENERAL, "replacements", DEFAULT_REPLACEMENTS);
+		prop.setLanguageKey("replacements");
+		prop.setComment("A list of entries in the following format: <block> <dataValue|-1|state|*> <block> [dataValue|state]");
 		for(String str : prop.getStringList()) {
 			String[] pieces = str.split(" ");
 			if(pieces.length != 3 && pieces.length != 4) {
