@@ -5,7 +5,7 @@
   "description": "Causes blocks that are destroyed by explosions to be degraded instead of dropping as intact items or completely vanishing.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://minecraft.curseforge.com/projects/degradeexplodedblocks",
   "updateUrl": "",
   "authorList": ["Joseph C. Sible"],
   "credits": "",
