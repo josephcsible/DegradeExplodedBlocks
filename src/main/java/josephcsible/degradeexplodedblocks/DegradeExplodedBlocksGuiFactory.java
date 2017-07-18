@@ -30,8 +30,8 @@ import net.minecraftforge.fml.client.config.GuiConfig;
 
 public class DegradeExplodedBlocksGuiFactory implements IModGuiFactory {
 
-	public static class ExpandedBonemealGuiConfig extends GuiConfig {
-		public ExpandedBonemealGuiConfig(GuiScreen parent) {
+	public static class DegradeExplodedBlocksGuiConfig extends GuiConfig {
+		public DegradeExplodedBlocksGuiConfig(GuiScreen parent) {
 			super(
 				parent,
 				new ConfigElement(DegradeExplodedBlocks.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(),
@@ -46,7 +46,7 @@ public class DegradeExplodedBlocksGuiFactory implements IModGuiFactory {
 
 	@Override
 	public Class<? extends GuiScreen> mainConfigGuiClass() {
-		return ExpandedBonemealGuiConfig.class;
+		return DegradeExplodedBlocksGuiConfig.class;
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class DegradeExplodedBlocksGuiFactory implements IModGuiFactory {
 
 	@Override
 	public GuiScreen createConfigGui(GuiScreen parentScreen) {
-		return new ExpandedBonemealGuiConfig(parentScreen);
+		return new DegradeExplodedBlocksGuiConfig(parentScreen);
 	}
 
 }
