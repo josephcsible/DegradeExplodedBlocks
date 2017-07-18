@@ -107,7 +107,7 @@ public class DegradeExplodedBlocks {
 		for(String str : prop.getStringList()) {
 			String[] pieces = str.split(" ");
 			if(pieces.length != 3 && pieces.length != 4) {
-				log.warn("Ignoring replacement with %d terms (expected 3 or 4): {}", pieces.length, str);
+				log.warn("Ignoring replacement with {} terms (expected 3 or 4): {}", pieces.length, str);
 				continue;
 			}
 
