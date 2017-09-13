@@ -75,6 +75,7 @@ public class DegradeExplodedBlocks {
 	}
 
 	public static Configuration config;
+	public static String[] replacementList;
 	public Map<Block, List<Replacement>> replacements;
 	public Logger log;
 
@@ -88,23 +89,32 @@ public class DegradeExplodedBlocks {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(this);
+		parseAndApplyConfig();
 	}
 
 	@SubscribeEvent
 	public void onConfigChanged(OnConfigChangedEvent eventArgs) {
-		if (eventArgs.getModID().equals(MODID))
+		if (eventArgs.getModID().equals(MODID)) {
 			syncConfig();
+			parseAndApplyConfig();
+		}
 	}
 
 	protected void syncConfig() {
-		replacements = new HashMap<Block, List<Replacement>>();
 		config.setCategoryComment(Configuration.CATEGORY_GENERAL, "Blocks, predicates, and states are specified exactly as they are with the /testforblock and /setblock commands.\nIf multiple replacements with different predicates are specified for the same block, the earliest matching one wins.");
 		// Not using getStringList to avoid overly-long list of default values in the comment
 		// XXX it still appears in the GUI; that needs to be fixed too
 		Property prop = config.get(Configuration.CATEGORY_GENERAL, "replacements", DEFAULT_REPLACEMENTS);
 		prop.setLanguageKey("replacements");
 		prop.setComment("A list of entries in the following format: <block> <dataValue|-1|state|*> <block> [dataValue|state]");
-		for(String str : prop.getStringList()) {
+		replacementList = prop.getStringList();
+		if (config.hasChanged())
+			config.save();
+	}
+
+	protected void parseAndApplyConfig() {
+		replacements = new HashMap<Block, List<Replacement>>();
+		for(String str : replacementList) {
 			String[] pieces = str.split(" ");
 			if(pieces.length != 3 && pieces.length != 4) {
 				log.warn("Ignoring replacement with {} terms (expected 3 or 4): {}", pieces.length, str);
@@ -153,8 +163,6 @@ public class DegradeExplodedBlocks {
 			}
 			replacements.get(oldBlock).add(new Replacement(predicate, newState));
 		}
-		if (config.hasChanged())
-			config.save();
 	}
 
 	@SubscribeEvent
