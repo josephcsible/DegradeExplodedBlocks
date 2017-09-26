@@ -77,6 +77,7 @@ public class DegradeExplodedBlocks {
 	public static Configuration config;
 	public static String[] replacementList;
 	public Map<Block, List<Replacement>> replacements;
+	public static double chance;
 	public Logger log;
 
 	@EventHandler
@@ -102,6 +103,7 @@ public class DegradeExplodedBlocks {
 
 	protected void syncConfig() {
 		config.setCategoryComment(Configuration.CATEGORY_GENERAL, "Blocks, predicates, and states are specified exactly as they are with the /testforblock and /setblock commands.\nIf multiple replacements with different predicates are specified for the same block, the earliest matching one wins.");
+		chance = config.get(Configuration.CATEGORY_GENERAL, "chance", 1.0, "The chance that a block broken by an explosion will be degraded, given that it drops at all", 0.0, 1.0).getDouble();
 		// Not using getStringList to avoid overly-long list of default values in the comment
 		// XXX it still appears in the GUI; that needs to be fixed too
 		Property prop = config.get(Configuration.CATEGORY_GENERAL, "replacements", DEFAULT_REPLACEMENTS);
@@ -171,7 +173,7 @@ public class DegradeExplodedBlocks {
 		for(BlockPos pos : event.getAffectedBlocks()) {
 			IBlockState state = world.getBlockState(pos);
 			Block block = state.getBlock();
-			if(!replacements.containsKey(block)) {
+			if(!replacements.containsKey(block) || world.rand.nextDouble() >= chance) {
 				continue;
 			}
 			for(Replacement replacement : replacements.get(block)) {
